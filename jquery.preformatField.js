@@ -26,14 +26,10 @@
         this.element = element;
         this.options = $.extend({}, defaults, options);
         this.$el      = $(element);
-        this.$el.data(name, this);
-        this._defaults = defaults;
-        var meta      = this.$el.data(name + '-opts');
-        this.options     = $.extend(this._defaults, options, meta);
         this.init();
     }
     Plugin.prototype = {
-        init : function() {       
+        init : function() {     
         	//chequeos previos
         	if(this.preChecksFail())
         		return false;
@@ -114,6 +110,11 @@
 							&& event.keyCode != 40 //cursor keys
 							&& event.keyCode != 13 //enter
 							&& event.keyCode != 9 //tab
+							&& event.keyCode != 46 //supr
+							&& event.keyCode != 16 //mayu
+							&& event.keyCode != 17 //ctrl
+							&& event.keyCode != 35 //fin
+							&& event.keyCode != 36 //home
 						)
 							return false;
 	    			}
@@ -125,6 +126,16 @@
 		setPreValue : function(){
 			this.valor = accounting.formatMoney(this.valorOriginal, this.options.symbol, this.options.precision,  this.options.thousand, this.options.decimal,this.options.format); // $4.999,99
 			this.$target.val(this.valor);
+		},
+		destroy : function(){
+			this.$el
+				.css("display",this.$el.data("display"))
+				.unbind("blur")
+				.unbind("change")
+				.unbind("keydown")
+				.data('plugin_' + pluginName,false);;
+			this.$target.remove();
+			this.$target=null;
 		}
     };
 
@@ -132,6 +143,12 @@
         return this.each(function() {
             if (!$.data(this, 'plugin_' + pluginName))
                 $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
+            else{
+            	var plugin = $.data(this, 'plugin_' + pluginName);
+            	if (typeof plugin[options] === 'function') 
+					return plugin[options]();
+    		}
+		        
         });
     };
 })(jQuery, document, window);

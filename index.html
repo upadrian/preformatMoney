@@ -10,9 +10,9 @@
 
 <body>
 <form>
-	<label>Número 1: <input type="text" name="precio" id="precio" class="preformat" /></label><br />
-	<label>Número 2: <input type="text" name="precio1" id="precio1" class="preformat" value="123.5" /></label><br />
-	<label>Número 3: <input type="text" name="precio2" id="precio2" class="preformat" value="10000.5" /></label><br />
+	<label>Número 1: <input type="text" name="precio" id="precio" class="preformatUSD" /></label><br />
+	<label>Número 2: <input type="text" name="precio1" id="precio1" class="preformatUYU" value="123.5" /></label><br />
+	<label>Número 3: <input type="text" name="precio2" id="precio2" class="preformat100" value="10000.5" /></label><br />
 	<label>Número 4(!): <input type="text" name="precio3" class="preformat" value="10000.5" /></label><br />
 	<label>Número 5(!): <input type="text" id="precio4" class="preformat" value="10000.5" /></label><br />
 	<label>Número 6(!): <input type="email" name="precio5" id="precio5" class="preformat" value="10000.5" /></label><br />
@@ -20,10 +20,14 @@
 
 <script type="text/javascript" src="jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="jquery.accounting.min.js"></script>
-<script type="text/javascript" src="jquery.preformatField.min.js"></script>
+<script type="text/javascript" src="jquery.preformatField.js"></script>
 <script>
 $(document).ready(function(){
-	$(".preformat").preformat({symbol:'$ '});	
+	$("input.preformatUSD").preformat({symbol:'USD '});
+	$("input.preformatUYU").preformat({symbol:'$ '});
+	$("input.preformatM2").preformat({symbol:'m2',format:'%v%s'});
+	$("input.preformatMTS").preformat({symbol:'mts',format:'%v%s'});
+	$("input.preformat100").preformat({symbol:'%',format:'%v%s'});
 })
 	</script>
 </body>
