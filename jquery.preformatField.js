@@ -1,7 +1,7 @@
 /**
  *	Preformatear valores numericos de un input, usando el plugin accounting para formatos de moneda
  *	Version: 1.0
- *	URL: URL
+ *	URL: https://github.com/upadrian/preformatMoney/
  *	Description: 
  *		Muestra valores monetarios pre formateados en un formulario, de forma que el usuario vea los separadores de miles, la moneda y los decimales según se necesite.
  *		Al clickear el campo, se muestra el campo original, con el numero original editable.
@@ -24,7 +24,7 @@
     };
     function Plugin(element, options) {
         this.element = element;
-        this.options = $.extend({}, defaults, options)
+        this.options = $.extend({}, defaults, options);
         this.$el      = $(element);
         this.$el.data(name, this);
         this._defaults = defaults;
@@ -55,24 +55,33 @@
         	if(!this.$el.attr("id")){
         		try{
         			console.log("Preformat plugin: missed id attribute on...");
-        			console.debug(this.$el)
+        			console.debug(this.$el);
 				} catch(e){}
         		return true;
        		}
        		if(!this.$el.attr("name")){
         		try{
         			console.log("Preformat plugin: missed name attribute on...");
-        			console.debug(this.$el)
+        			console.debug(this.$el);
 				} catch(e){}
         		return true;
        		}
         	if(this.$el.attr("type") != "text" && this.$el.attr("type") != "number"){
         		try{
         			console.log("Preformat plugin: type "+this.$el.attr("type")+" not supported on...");
-        			console.debug(this.$el)
+        			console.debug(this.$el);
 				} catch(e){}
         		return true;
        		}
+       		
+			   if(typeof(accounting)!="object"){
+       			try{
+        			console.log("We need accounting plugin, get it on http://josscrowcroft.github.com/accounting.js");
+				} catch(e){}
+        		return true;
+       		}
+       		
+       			
         },
         getValue : function(){
 			this.valorOriginal = this.$el.val();
@@ -85,7 +94,7 @@
 	    	plugin.$target.focus(function(){
 	   			$(this).css("display","none");
 	   			plugin.$el.css("display",plugin.$el.data("display")).focus();
-	   		})
+	   		});
 	    	plugin.$el
 				.blur(function(){
 	    			$(this).css("display","none");
