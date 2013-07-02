@@ -97,27 +97,20 @@
 	    			plugin.$target.css("display",plugin.$el.data("display"));
 	    		})
 	    		.change(function(){
+	    			if(isNaN($(this).val())){
+	    				$(this).val("0");
+	    				return false;
+    				}
 	    			plugin.getValue();	
 	    			plugin.setPreValue();
 	    		})
-	    		.keydown(function(event){
-	    			if(event.keyCode<96 || event.keyCode>105){
-	    				if(
-							event.keyCode != 8 //backspace
-							&& event.keyCode != 37 //cursor keys
-							&& event.keyCode != 38 //cursor keys
-							&& event.keyCode != 39 //cursor keys
-							&& event.keyCode != 40 //cursor keys
-							&& event.keyCode != 13 //enter
-							&& event.keyCode != 9 //tab
-							&& event.keyCode != 46 //supr
-							&& event.keyCode != 16 //mayu
-							&& event.keyCode != 17 //ctrl
-							&& event.keyCode != 35 //fin
-							&& event.keyCode != 36 //home
-						)
-							return false;
-	    			}
+	    		.keypress(function(ev){
+	    			//http://stackoverflow.com/questions/3764821/best-way-to-restrict-a-text-field-to-numbers-only
+	    			var iKeyCode = ev.which || ev.keyCode,
+						aSpecialKeysForFirefox = [8, 9, 13, 16, 17, 27, 35, 36, 37, 38, 39, 40, 46],
+						sKey = String.fromCharCode(iKeyCode);
+					if(!sKey.match(/[0-9]/) && $.inArray(iKeyCode, aSpecialKeysForFirefox) < 0)
+							ev.preventDefault();
 	    		})
 	    },
     	isNumber : function(n){
